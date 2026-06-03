@@ -11,6 +11,18 @@ A high-performance, object-oriented 8-bit retro arcade game built with **Python*
   - **Single Fire Mode** (Press `Q`): Controlled shooting with a strict $400\text{ms}$ cooldown rate limit to prevent spamming.
   - **Rapid Fire Mode** (Press `E`): High-speed firing for a $5$-second continuous window, followed by a stateful $5$-second cooldown cycle where the player's weapon must cool down.
 
+### 🛡️ Stateful Shield System & Invincibility Frames
+- Player ship starts with a 3-point shield (HP) segment HUD. Hitting obstacles reduces shield capacity, triggers screen shake, and activates a temporary flashing invincibility window for $1.5$-seconds to prevent instant deaths.
+
+### 🌟 Parallax Scrolling Starfield
+- Implements depth-layered starry backgrounds (foreground, midground, background) traveling at different speeds to create a rich 3D forward flight illusion.
+
+### 💥 Physics-Based Particle Explosion Debris
+- Generates 8-12 unique rock fragments with vector velocities, gravity drift, and opacity decay whenever a meteor is destroyed.
+
+### 🔋 Dynamic HUD Indicators & Heat Meter
+- Displays real-time shield levels, level progression, and a responsive Rapid Fire weapon heat meter representing heat accumulation and cooling cycles.
+
 ### 🔊 DSP Procedural Audio Engine
 - Sounds and background chiptune music are generated programmatically via Python's native `wave` and `struct` libraries, bypassing external binary audio dependencies.
 - Features frequency-swept square waves for lasers, triangle-wave bass lines for background chiptunes, and exponentially decaying white noise for explosions.
@@ -32,7 +44,7 @@ A high-performance, object-oriented 8-bit retro arcade game built with **Python*
 
 #### Assets & Media 🖥️
 - **`Images/`**: Contains core graphical sprite sheets and icons (`player.png`, `laser.png`, `meteor.png`, `star.png`, `game_icon.png`).
-- **`Sound/`**: Holds synthesized audio files (`laser.wav`, `rapid_fire_sound.wav`, `explosion.wav`, `game_over.wav`, `game_music.wav`).
+- **`Sound/`**: Holds synthesized audio files (`laser.wav`, `rapid_fire_sound.wav`, `explosion.wav`, `game_over.wav`, `game_music.wav`, `powerup.wav`).
 - **`explosion/explosion/`**: A sequential 21-frame list of sprite images (`0.png` to `20.png`) utilized by the animation handler for explosion sprites.
 - **`Rustic_Barn.ttf`**: Digital font asset for in-game HUD score displays.
 
@@ -42,6 +54,8 @@ A high-performance, object-oriented 8-bit retro arcade game built with **Python*
 - **`meteor.py`**: Defines the `Meteor` sprite behavior, speed vectors, decay timers, and continuous rotation.
 - **`laser.py`**: Standard laser projectile class handling directional velocity.
 - **`star.py`**: Handles background star generation for the scrolling parallax effect.
+- **`powerup.py`**: Defines the `PowerUp` drops including Shield restorers, Triple-shot boosts, and Rapid-fire cooldown resets.
+- **`debris.py`**: Manages the physics-based explosion debris particle dispersion on meteor destruction.
 - **`functions.py`**: Implements collision check states, high score filesystem load/save functions, and HUD draw coordinates.
 - **`generate_sounds.py`**: The DSP math synthesis engine file used to generate all WAV sound effects.
 

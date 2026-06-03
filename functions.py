@@ -2,8 +2,9 @@ import pygame
 import time
 import sys
 import os
-from random import random, choice
+from random import random, choice, randint
 from powerup import PowerUp
+from debris import MeteorDebris
 
 HIGH_SCORE_FILE = "highscore.txt"
 
@@ -61,6 +62,10 @@ def collision(player, meteor_sprites, laser_sprites, powerup_sprites, AnimatedEx
                 AnimatedExplosion(explosion_frames, meteor.rect.center, all_sprites)
                 explosion_sound.play()
                 score += 50 # Add score for hitting meteor
+                
+                # Spawn meteor debris particles
+                for _ in range(randint(8, 12)):
+                    MeteorDebris(meteor.rect.center, all_sprites)
                 
                 # 15% drop rate for power-ups
                 if random() < 0.15:

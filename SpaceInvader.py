@@ -79,9 +79,14 @@ meteor_sprites=pygame.sprite.Group()
 laser_sprites=pygame.sprite.Group()
 powerup_sprites=pygame.sprite.Group()
 
-for i in range (30):
-    Star(all_sprites,star_surf,screen_width-100,screen_height-100) #the all sprites is a group and star_surf is a surface of the star
-    
+# Create depth-layered stars for parallax scrolling
+for _ in range(10):
+    Star(all_sprites, star_surf, screen_width, screen_height, depth=1)
+for _ in range(15):
+    Star(all_sprites, star_surf, screen_width, screen_height, depth=2)
+for _ in range(15):
+    Star(all_sprites, star_surf, screen_width, screen_height, depth=3)
+
 player=Player(all_sprites,screen_width,screen_height,laser_surf,laser_sound,all_sprites,laser_sprites,"single_fire",laser_sound_rapid_fire)
 
 #custom events (meteor events)
@@ -158,6 +163,38 @@ def draw_hud(surf):
         else:
             hp_color = (231, 76, 60)  # red
         pygame.draw.rect(surf, hp_color, (bar_x + i * segment_width + 1, bar_y + 1, segment_width - 2, bar_height - 2))
+
+    # Draw heat bar if in rapid fire mode
+    if player.laser_mode == "rapid_fire":
+        current_time = pygame.time.get_ticks()
+        heat_val = 0
+        if player.first_execution_time_rapid is not None:
+            if player.can_shoot:
+                heat_val = min(5000, current_time - player.first_execution_time_rapid)
+            else:
+                if player.last_execution_time_rapid is not None:
+                    cooldown_elapsed = current_time - player.last_execution_time_rapid
+                    heat_val = max(0, 5000 - cooldown_elapsed)
+                else:
+                    heat_val = 5000
+        
+        heat_bar_width = 150
+        heat_bar_height = 10
+        heat_bar_x = screen_width - heat_bar_width - 20
+        heat_bar_y = 50
+        
+        # Label for heat
+        heat_label = font_small.render("HEAT", True, (200, 200, 200))
+        surf.blit(heat_label, (heat_bar_x - 65, heat_bar_y - 8))
+        
+        # Draw border
+        pygame.draw.rect(surf, (100, 100, 100), (heat_bar_x - 1, heat_bar_y - 1, heat_bar_width + 2, heat_bar_height + 2), 1, 2)
+        
+        # Fill heat bar
+        fill_width = int(heat_bar_width * (heat_val / 5000))
+        fill_color = (231, 76, 60) if not player.can_shoot else (230, 126, 34)
+        if fill_width > 0:
+            pygame.draw.rect(surf, fill_color, (heat_bar_x, heat_bar_y, fill_width, heat_bar_height))
 
 while running: 
     dt= clock.tick(300)/1000
