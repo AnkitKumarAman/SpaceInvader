@@ -37,8 +37,19 @@ class Player(pygame.sprite.Sprite):
                 self.can_shoot=True
     def update(self,dt):
         keys=pygame.key.get_pressed()
-        self.direction.x=int(keys[pygame.K_RIGHT])-int(keys[pygame.K_LEFT])
-        self.direction.y=int(keys[pygame.K_DOWN])-int(keys[pygame.K_UP])
+        
+        # Support both Arrow keys and A/D keys for horizontal movement
+        dx = int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT])
+        if dx == 0:
+            dx = int(keys[pygame.K_d]) - int(keys[pygame.K_a])
+            
+        # Support both Arrow keys and W/S keys for vertical movement
+        dy = int(keys[pygame.K_DOWN]) - int(keys[pygame.K_UP])
+        if dy == 0:
+            dy = int(keys[pygame.K_s]) - int(keys[pygame.K_w])
+            
+        self.direction.x = dx
+        self.direction.y = dy
         self.direction=self.direction.normalize() if self.direction else self.direction
         self.rect.center+=self.direction*self.speed*dt
         keys1=pygame.key.get_just_pressed()
@@ -73,10 +84,10 @@ class Player(pygame.sprite.Sprite):
             if current_time-self.first_execution_time_single>=400:
                 self.can_shoot=True
                 self.first_execution_time_single=None
-        if keys1[pygame.K_r] and self.laser_mode=="single_fire":
+        if keys1[pygame.K_e] and self.laser_mode=="single_fire":
             self.laser_mode="rapid_fire"
             print(self.laser_mode)
-        if keys1[pygame.K_s] and self.laser_mode=="rapid_fire":
+        if keys1[pygame.K_q] and self.laser_mode=="rapid_fire":
             self.laser_mode="single_fire"
             print(self.laser_mode)
   

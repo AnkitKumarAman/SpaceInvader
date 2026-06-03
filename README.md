@@ -8,8 +8,8 @@ A high-performance, object-oriented 8-bit retro arcade game built with **Python*
 
 ### ⚙️ Stateful Dual-Fire Weapon System
 - Toggle dynamically between two strategic firing patterns:
-  - **Single Fire Mode** (Press `S`): Controlled shooting with a strict $400\text{ms}$ cooldown rate limit to prevent spamming.
-  - **Rapid Fire Mode** (Press `R`): High-speed firing for a $5$-second continuous window, followed by a stateful $5$-second cooldown cycle where the player's weapon must cool down.
+  - **Single Fire Mode** (Press `Q`): Controlled shooting with a strict $400\text{ms}$ cooldown rate limit to prevent spamming.
+  - **Rapid Fire Mode** (Press `E`): High-speed firing for a $5$-second continuous window, followed by a stateful $5$-second cooldown cycle where the player's weapon must cool down.
 
 ### 🔊 DSP Procedural Audio Engine
 - Sounds and background chiptune music are generated programmatically via Python's native `wave` and `struct` libraries, bypassing external binary audio dependencies.
@@ -86,8 +86,8 @@ python SpaceInvader.py
 | :--- | :--- |
 | **Move Spaceship** | Arrow Keys / `A`, `D`, `W`, `S` |
 | **Shoot Laser** | `Spacebar` |
-| **Single Fire Mode** | `S` |
-| **Rapid Fire Mode** | `R` |
+| **Single Fire Mode** | `Q` |
+| **Rapid Fire Mode** | `E` |
 
 ---
 
