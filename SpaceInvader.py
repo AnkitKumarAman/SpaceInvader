@@ -115,6 +115,7 @@ def reset_game():
     meteor_spawn_interval = 500
     pygame.time.set_timer(meteor_events, meteor_spawn_interval)
     functions.reset_game_state(player, meteor_sprites, laser_sprites, powerup_sprites, screen_width, screen_height)
+    all_sprites.add(player)
     game_state = STATE_PLAYING
 
 # Score accumulation timer (adds 10 points per second of survival)
@@ -198,7 +199,7 @@ while running:
         all_sprites.update(dt)
         # Remove laser and meteor updates in start screen
         for s in all_sprites:
-            if not isinstance(s, Star):
+            if not isinstance(s, Star) and not isinstance(s, Player):
                 s.kill()
         all_sprites.draw(game_canvas)
         
