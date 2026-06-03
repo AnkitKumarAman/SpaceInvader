@@ -102,6 +102,9 @@ python SpaceInvader.py
 | **Shoot Laser** | `Spacebar` |
 | **Single Fire Mode** | `Q` |
 | **Rapid Fire Mode** | `E` |
+| **Start Game** (Start Screen) | `Spacebar` |
+| **Replay Game** (Game Over Screen) | `R` |
+| **Quit Game** (Game Over / Play Screen) | `Q` |
 
 ---
 
