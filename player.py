@@ -21,7 +21,7 @@ class Player(pygame.sprite.Sprite):
         self.laser_sound=laser_sound
         self.all_sprites=all_sprites
         self.laser_sprites=laser_sprites
-        self.laser_mode="single_fire"
+        self.laser_mode=laser_mode
         self.laser_sound_rapid_fire=laser_sound_rapid_fire
         #mask
         self.mask=pygame.mask.from_surface(self.image)
@@ -53,24 +53,33 @@ class Player(pygame.sprite.Sprite):
         self.direction=self.direction.normalize() if self.direction else self.direction
         self.rect.center+=self.direction*self.speed*dt
         keys1=pygame.key.get_just_pressed()
-        if keys1[pygame.K_SPACE] and self.can_shoot==True:
+        
+        # Single Fire shoots once per tap, Rapid Fire shoots continuously while Space is held down
+        if self.laser_mode == "single_fire":
+            shoot_pressed = keys1[pygame.K_SPACE]
+        else:
+            shoot_pressed = keys[pygame.K_SPACE]
+            
+        if shoot_pressed and self.can_shoot==True:
             current_time=pygame.time.get_ticks()
             if self.laser_mode=="single_fire":
                 Laser(self.laser_surf,self.rect.midtop,(self.all_sprites,self.laser_sprites))
                 self.can_shoot=False
-                self.laser_shoot_time=pygame.time.get_ticks()
-                self.first_execution_time_single=self.laser_shoot_time
+                self.laser_shoot_time=current_time
+                self.first_execution_time_single=current_time
                 self.laser_sound.play()
             elif self.laser_mode=="rapid_fire":
-                Laser(self.laser_surf,self.rect.midtop,(self.all_sprites,self.laser_sprites))
-                self.laser_shoot_time=pygame.time.get_ticks()
-                if self.first_execution_time_rapid is None:
-                    self.first_execution_time_rapid=self.laser_shoot_time
-                if current_time-self.first_execution_time_rapid>=5000:
-                    if self.last_execution_time_rapid is None:
-                        self.last_execution_time_rapid=current_time
-                    self.can_shoot=False
-                self.laser_sound.play()
+                # Enforce a 120ms delay between consecutive shots in rapid mode
+                if current_time - self.laser_shoot_time >= 120:
+                    Laser(self.laser_surf,self.rect.midtop,(self.all_sprites,self.laser_sprites))
+                    self.laser_shoot_time=current_time
+                    if self.first_execution_time_rapid is None:
+                        self.first_execution_time_rapid=current_time
+                    if current_time-self.first_execution_time_rapid>=5000:
+                        if self.last_execution_time_rapid is None:
+                            self.last_execution_time_rapid=current_time
+                        self.can_shoot=False
+                    self.laser_sound_rapid_fire.play()
         if self.laser_mode=="rapid_fire" and self.can_shoot==False:
             current_time=pygame.time.get_ticks()
             if current_time-self.last_execution_time_rapid>=5000:
