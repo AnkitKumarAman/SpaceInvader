@@ -1,21 +1,27 @@
-""" RULES AND FEATURES OF THE GAME
-These are solid gameplay features that add depth to your "Space Invader" game! Here's a quick summary of how these features shape the overall gameplay experience:
-1.Switching Between Fire Modes:
-The player can toggle between single fire and rapid fire modes for more strategic shooting.
-Single Fire Mode: Press "S" to switch to single fire mode.
-Rapid Fire Mode: Press "R" to switch to rapid fire mode.
-2.Single Fire Mode:
-Press "Space" to shoot lasers in single fire mode.
-There's a cooldown of 400 milliseconds between consecutive laser shots, preventing spam but encouraging careful timing.
-3.Rapid Fire Mode:
-In rapid fire mode, players can shoot a laser every time they press "Space".
-5 seconds of continuous firing is allowed, after which a 5-second cooldown kicks in before the player can shoot again.
-4.Countdown Logic for Rapid Fire:
-The 5-second countdown in rapid fire mode begins on the first laser shot, so players need to make those 5 seconds count. If they don't fire continuously during that time, the window for rapid fire will close, and they'll have to wait for the cooldown before firing again.
-5.Game Over Condition:
-If a meteor hits the player, the game ends instantly, making avoidance crucial to survival.
-6.Laser Movement:
-Press "a" for left movement of laser
-Press "d" for right movement of laser
-there is no movement in vertical direction for laser because it doesn't make sense
-"""
+# Space Invader Retro Arcade Game 🚀👾
+
+A high-performance, object-oriented recreation of the classic retro arcade game **Space Invader** built using **Python** and **Pygame-CE (Community Edition)**. This project highlights custom digital signal processing (DSP) sound synthesis, stateful weapon mechanics, and pixel-perfect collision detection.
+
+---
+
+## ✨ Features
+
+- **Procedural Audio Synthesis (DSP)**: Sound effects (lasers, explosions, game-over chime) and a background chiptune music loop are synthesized procedurally from scratch using Python's native `wave` and `struct` libraries, bypassing external audio asset dependencies.
+- **Stateful Weapon Modes**: Toggle dynamically between two strategic fire patterns:
+  - **Single Fire**: Balanced gameplay with a strict 400ms cooldown rate limit.
+  - **Rapid Fire**: Unleash a stream of lasers for a 5-second window, followed by a stateful 5-second cooldown period.
+- **Pixel-Perfect Collisions**: Uses Pygame's bitmask-based overlay detection (`pygame.sprite.collide_mask`) to guarantee accurate projectile collision overlays.
+- **Persistent High Score Tracking**: Leverages local filesystem caching to read, record, and display the player's lifetime record dynamically during runtime.
+- **Resolution-Independent Rendering**: Programmed with a flexible viewport architecture that adjusts game boundaries and HUD positions dynamically based on screen dimensions.
+
+---
+
+## 🛠️ Installation & Setup
+
+### Prerequisites
+Make sure you have Python 3.10+ installed.
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/AnkitKumarAman/SpaceInvader.git
+cd SpaceInvader
